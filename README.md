@@ -4,6 +4,8 @@
 
 ## Development
 
+Copy `.env.example` to `.env` and fill in all of the values.
+
 From your terminal:
 
 ```sh
