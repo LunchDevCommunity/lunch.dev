@@ -112,8 +112,6 @@ function Document({
   children: React.ReactNode;
   title?: string;
 }) {
-  const user = useLoaderData();
-
   return (
     <html lang="en">
       <head>
@@ -124,7 +122,7 @@ function Document({
         <Links />
       </head>
       <body>
-        <UserProvider user={user}>{children}</UserProvider>
+        {children}
         <ScrollRestoration />
         <Scripts />
         {process.env.NODE_ENV === "development" && <LiveReload />}
@@ -134,7 +132,6 @@ function Document({
 }
 
 function Layout({ children }: { children: React.ReactNode }) {
-  const user = useUser();
   return (
     <div className="remix-app">
       <header className="remix-app__header">
@@ -148,12 +145,14 @@ function Layout({ children }: { children: React.ReactNode }) {
                 <Link to="/">Home</Link>
               </li>
               <li>
+                <Link to="/events">Events</Link>
+              </li>
+              <li>
                 <a href="https://remix.run/docs">Remix Docs</a>
               </li>
               <li>
                 <a href="https://github.com/remix-run/remix">GitHub</a>
               </li>
-              <li>{user.displayname}</li>
             </ul>
           </nav>
         </div>
