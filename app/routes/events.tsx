@@ -4,6 +4,12 @@ import { getSession } from "~/auth/localSession.server";
 import { db } from "~/helpers/prisma.server";
 import { USER_SESSION_KEY } from "./oauth/discord";
 import type { APIGuildScheduledEvent } from "discord-api-types/v9";
+import { comparators } from 'generate-comparators';
+
+const byScheduledStartTime = comparators(function (guildEvent: APIGuildScheduledEvent) {
+	const startTime = new Date(guildEvent.scheduled_start_time);
+	return startTime;
+});
 
 const BASE_URL = "https://discord.com/api/v9";
 export const loader: LoaderFunction = async ({ request }) => {
@@ -29,6 +35,8 @@ export const loader: LoaderFunction = async ({ request }) => {
     Routes.guildScheduledEvents("105756917887950848") as any,
     { authPrefix: "Bot" }
   );
+
+  (discordEvents as APIGuildScheduledEvent[]).sort(byScheduledStartTime.asc);
 
   return discordEvents;
 };
