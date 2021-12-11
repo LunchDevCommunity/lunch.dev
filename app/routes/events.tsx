@@ -21,12 +21,8 @@ export const loader: LoaderFunction = async ({ request }) => {
   const discordRest = new REST({ version: "9" }).setToken(
     process.env.DISCORD_BOT_TOKEN || ""
   );
-  const { Routes } = await import("discord-api-types/v9");
-
-  console.log(Routes.guildScheduledEvents("105756917887950848"));
-
   const discordEvents = await discordRest.get(
-    Routes.guildScheduledEvents("105756917887950848") as any,
+    "/guilds/105756917887950848/scheduled-events",
     { authPrefix: "Bot" }
   );
 
@@ -42,8 +38,8 @@ export default function Events() {
   const events = useLoaderData() as APIGuildScheduledEvent[];
   return (
     <div>
-      <h1>Events</h1>
-      <ul>
+      <h1 className="text-red-500">Events</h1>
+      <ul className="text-blue-500">
         {events.map((e) => (
           <li key={e.id}>
             {e.name} - {new Date(e.scheduled_start_time).toLocaleString()}

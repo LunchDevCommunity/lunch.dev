@@ -4,8 +4,11 @@
   "description": "",
   "license": "",
   "scripts": {
-    "build": "remix build",
-    "dev": "node -r dotenv/config node_modules/.bin/remix dev",
+    "build": "npm run build:css && remix build",
+    "build:css": "tailwindcss -o ./app/tailwind.css",
+    "dev": "concurrently \"npm run dev:css\" \"npm run dev:remix\"",
+    "dev:css": "tailwindcss -i ./app/tailwind/tailwind.css -o ./app/styles/tailwind.css --watch",
+    "dev:remix": "node -r dotenv/config node_modules/.bin/remix dev",
     "postinstall": "remix setup node",
     "start": "remix-serve build"
   },
@@ -27,6 +30,8 @@
     "@remix-run/dev": "^1.0.6",
     "@types/react": "^17.0.24",
     "@types/react-dom": "^17.0.9",
+    "concurrently": "^6.4.0",
+    "tailwindcss": "^3.0.0",
     "typescript": "^4.1.2"
   },
   "engines": {

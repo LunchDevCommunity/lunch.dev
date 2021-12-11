@@ -14,6 +14,8 @@ import type { LinksFunction } from "remix";
 
 import globalStylesUrl from "~/styles/global.css";
 import darkStylesUrl from "~/styles/dark.css";
+import tailwind from "~/styles/tailwind.css";
+
 import { db } from "./helpers/prisma.server";
 import { getSession } from "./auth/localSession.server";
 import { USER_SESSION_KEY } from "./routes/oauth/discord";
@@ -27,6 +29,10 @@ export let links: LinksFunction = () => {
       rel: "stylesheet",
       href: darkStylesUrl,
       media: "(prefers-color-scheme: dark)",
+    },
+    {
+      rel: "stylesheet",
+      href: tailwind,
     },
   ];
 };
